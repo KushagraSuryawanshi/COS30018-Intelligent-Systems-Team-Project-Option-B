@@ -6,5 +6,5 @@
 - Name and purpose of branch may be altered.
 
 ## Resources:
-- ![Documentation for OpenCV Binarisation](https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
-- ![Gray Scaling of Images using OpenCV - GeeksforGeeks](https://www.geeksforgeeks.org/python/python-grayscaling-of-images-using-opencv/)
+- [Documentation for OpenCV Binarisation](https://docs.opencv.org/4.x/d7/d4d/tutorial_py_thresholding.html)
+- [Gray Scaling of Images using OpenCV - GeeksforGeeks](https://www.geeksforgeeks.org/python/python-grayscaling-of-images-using-opencv/)
