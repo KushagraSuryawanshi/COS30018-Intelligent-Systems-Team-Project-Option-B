@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bceadeff-1004-44aa-9ff9-879558b1d3f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ML_Models/MLP_MNIST_Model/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ML_Models/MLP_MNIST_Model/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/[OLD] Google Colab Models/OLD_MLP_Google_Colab.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ML_Models/FNN_MNIST_Model/neural_network.py" beforeDir="false" afterPath="$PROJECT_DIR$/ML_Models/FNN_MNIST_Model/neural_network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -86,7 +82,7 @@
       <workItem from="1756004675182" duration="418000" />
       <workItem from="1756005111086" duration="37000" />
       <workItem from="1756005259104" duration="19000" />
-      <workItem from="1756006405925" duration="1325000" />
+      <workItem from="1756006405925" duration="1678000" />
     </task>
     <servers />
   </component>

@@ -11,7 +11,6 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 
 # Project Configuration
-# --- CHANGE THIS LINE ---
 project_path = r'D:\Repos\COS30018-Intelligent-Systems-Team-Project\ML_Models\test_images'
 print(f"Project path is set to: {os.path.abspath(project_path)}")
 
