@@ -11,7 +11,8 @@ from torch.autograd import Variable
 from torchvision import datasets, transforms
 
 # Project Configuration
-project_path = '.'
+# --- CHANGE THIS LINE ---
+project_path = r'D:\Repos\COS30018-Intelligent-Systems-Team-Project\ML_Models\test_images'
 print(f"Project path is set to: {os.path.abspath(project_path)}")
 
 
@@ -32,13 +33,13 @@ def load_image(image_path):
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-        self.fc1 = nn.Linear(28 * 28, 512) # 512 neurons in the first layer
-        self.dropout1 = nn.Dropout(0.5) # Dropout layer to prevent overfitting
-        self.fc2 = nn.Linear(512, 256) # 256 neurons in the second layer
-        self.dropout2 = nn.Dropout(0.5) # Dropout layer to prevent overfitting
-        self.fc3 = nn.Linear(256, 128) # 128 neurons in the third layer
-        self.dropout3 = nn.Dropout(0.5) # Dropout layer to prevent overfitting
-        self.fc4 = nn.Linear(128, 10) # 10 neurons in the fourth layer
+        self.fc1 = nn.Linear(28 * 28, 512)
+        self.dropout1 = nn.Dropout(0.5)
+        self.fc2 = nn.Linear(512, 256)
+        self.dropout2 = nn.Dropout(0.5)
+        self.fc3 = nn.Linear(256, 128)
+        self.dropout3 = nn.Dropout(0.5)
+        self.fc4 = nn.Linear(128, 10)
 
     def forward(self, x):
         x = F.relu(self.fc1(x))
@@ -54,10 +55,9 @@ class Net(nn.Module):
 def create_nn(learning_rate=0.05, batch_size=200, epochs=10,
               log_interval=10, saving_name="net.pt"):
     print("Loading training set")
-    # Data augmentation applied to the training set
     train_transform = transforms.Compose([
-        transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1)), # Randomly rotate, translate, and scale the image slighly
-        transforms.GaussianBlur(kernel_size=3), # Slight gaussian blur to reduce noise with hand drawn images
+        transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1)),
+        transforms.GaussianBlur(kernel_size=3),
         transforms.ToTensor(),
         transforms.Normalize((0.1307,), (0.3081,))
     ])
@@ -68,7 +68,6 @@ def create_nn(learning_rate=0.05, batch_size=200, epochs=10,
         batch_size=batch_size, shuffle=True)
 
     print("Loading data test set")
-    # No augmentation on the test set
     test_transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize((0.1307), (0.3081,))
@@ -82,7 +81,6 @@ def create_nn(learning_rate=0.05, batch_size=200, epochs=10,
     print("Creating Neural Network")
     net = Net()
     optimizer = optim.SGD(net.parameters(), lr=learning_rate, momentum=0.9)
-    # Add the learning rate scheduler
     scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
     criterion = nn.NLLLoss()
 
@@ -101,7 +99,6 @@ def create_nn(learning_rate=0.05, batch_size=200, epochs=10,
                     'Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                         epoch, batch_idx * len(data), len(train_loader.dataset),
                                100. * batch_idx / len(train_loader), loss.item()))
-        # Step the scheduler after each epoch
         scheduler.step()
 
     print("Starting Testing")
@@ -124,7 +121,8 @@ def create_nn(learning_rate=0.05, batch_size=200, epochs=10,
 
 
 def guess_number(image_path, loading_name):
-    model_path = os.path.join(project_path, loading_name)
+    # This line needs to be adjusted.
+    model_path = os.path.join(r"D:\Repos\COS30018-Intelligent-Systems-Team-Project\ML_Models\FNN_MNIST_Model", loading_name)
     if not os.path.exists(model_path):
         print(f"Error: Model file not found at {model_path}. "
               "Please create the neural network first (by typing 'nn').")
@@ -149,7 +147,7 @@ def start(prompt):
         print("Creating Neural Network for MNIST")
         create_nn()
     elif task == "gd":
-        test_dir = os.path.join(project_path, "test_images")
+        test_dir = project_path
 
         if not os.path.exists(test_dir):
             print(f"Error: Directory not found at {test_dir}.")
