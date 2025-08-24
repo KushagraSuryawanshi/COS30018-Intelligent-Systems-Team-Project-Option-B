@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bceadeff-1004-44aa-9ff9-879558b1d3f1" name="Changes" comment="" />
+    <list default="true" id="bceadeff-1004-44aa-9ff9-879558b1d3f1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Task_1_PreProcessing/Tim_Experimentation/Load_Images.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task_1_PreProcessing/Tim_Experimentation/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Task_1_PreProcessing/Tim_Experimentation/README.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,15 +36,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Repos/COS30018-Intelligent-Systems-Team-Project/ML_Models/MLP_MNIST_Model/main.py&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "D:/Repos/COS30018-Intelligent-Systems-Team-Project/Task_1_PreProcessing/Tim_Experimentation"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\Task_1_PreProcessing\Tim_Experimentation" />
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\Task_4_Evaluation\Two2_Experimentation" />
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\Task_4_Evaluation\Tim_Experimentation" />
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\Task_4_Evaluation\Sparrow_Experimentation" />
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\Task_4_Evaluation\Dion_Experimentation" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\GUI" />
       <recent name="D:\Repos\COS30018-Intelligent-Systems-Team-Project\[OLD] Google Colab Models" />
     </key>
   </component>
@@ -81,6 +93,7 @@
       <workItem from="1756005111086" duration="37000" />
       <workItem from="1756005259104" duration="19000" />
       <workItem from="1756006405925" duration="1788000" />
+      <workItem from="1756008234891" duration="857000" />
     </task>
     <servers />
   </component>
