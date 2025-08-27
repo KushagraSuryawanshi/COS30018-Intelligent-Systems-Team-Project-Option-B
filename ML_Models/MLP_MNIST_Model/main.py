@@ -4,7 +4,6 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import cv2 
 import os
-print(">>> Current working directory:", os.getcwd())
 
 
 mnist = tf.keras.datasets.mnist
