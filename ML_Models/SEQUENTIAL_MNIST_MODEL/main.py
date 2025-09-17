@@ -4,16 +4,14 @@ from tensorflow import keras
 from tensorflow.keras import layers
 import cv2 
 import os
+from preprocess import preprocess_image
 
-model = tf.keras.models.load_model('ML_Models/SEQ_MNIST_Model/Sequential.keras')
+model = tf.keras.models.load_model('ML_Models/SEQUENTIAL_MNIST_MODEL/Sequential.keras')
 
-img = cv2.imread("ML_Models/test_images/DionDrawing1.png", cv2.IMREAD_GRAYSCALE)
-img = cv2.resize(img, (28, 28))
-img = 255 - img
-img = tf.expand_dims(img, axis=0)
+img = preprocess_image('ML_Models/testing_images/Thicker3.png')
 
-pred = model.predict(img)
-
-plt.imshow(img[0], cmap="gray")
+plt.imshow(img[0])
 plt.show()
+pred = model.predict(img)
 print(f"result: {tf.argmax(pred, axis=1).numpy()[0]}")
+
