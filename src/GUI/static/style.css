@@ -1,0 +1,115 @@
+/* Spinning Animation for Loading/Re-training */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f8f8;
+    padding: 20px;
+}
+/* spacing out header */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+hr{
+    border: 2px solid black;
+    margin: 10px 0;
+}
+/* grid-template-columns will likely change */
+.main-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+.controls{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* https://louisem.com/421408/gray-hex-codes */
+.controls button,
+.controls select,
+.controls input{
+    padding: 10px;
+    background-color:#D9DDDC;
+    font-size: 14px;
+    border: 1px solid black;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.result-box{
+    border: 1px solid #808588;
+    padding: 10px;
+    background-color: white;
+}
+.draw-box{
+    border: 1px solid black;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.visualisation-box{
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #808588;
+    margin-bottom: 10px;
+}
+
+.prediction-table {
+    width: 100%;
+    border-collapse: collapse; /* Removes space between cell borders */
+    margin-top: 10px;
+}
+
+.prediction-table th,
+.prediction-table td {
+    border: 1px solid #ccc; /* Adds a light border to cells */
+    padding: 8px;           /* Adds space inside cells */
+    text-align: center;       /* Centers the text */
+}
+
+.prediction-table th {
+    background-color: #f2f2f2; /* A light grey background for the header */
+    font-weight: bold;
+}
+
+.evaluation-charts {
+    margin-bottom: 20px; /* Adds space between the charts and the predictions table */
+    text-align: center;   /* Centers the headers */
+}
+
+.evaluation-charts h4 {
+    margin-bottom: 15px;
+}
+
+.evaluation-charts h5 {
+    margin-top: 15px;   /* Adds space above each subtitle in ensemble view */
+    margin-bottom: 5px;
+}
+
+.evaluation-charts img {
+    max-width: 80%; /* Adjust size as needed */
+    height: auto;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto; /* Centers the image within its container */
+}
+
+/* Spinner for the re-train button */
+.spinner {
+    display: none; /* Hidden by default */
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin-left: 10px; /* Space it out from the button */
+}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Character encoding for the HTML document -->
+  <meta charset="UTF-8"/>
+  <!-- Ensures the page scales properly on mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Title displayed in the browser tab -->
+  <title>COS30018 Intelligent Systems - Handwritten Number Recognition</title>
+
+  <!-- Link to external stylesheet (Flask template syntax for dynamic file path) -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+
+  <!-- Metadata for author and project description -->
+  <meta name="author" content ="Timothy Schnabel 105334128">
+  <meta name="description" content ="COS30018 Intelligent Systems Assignment: Handwritten Number Recognition">
+</head>
+<body>
+
+
+<header class="SiteHeader_core">
+  <div class="SiteHeader_wrapper">
+    <h2>COS30018 Intelligent Systems</h2>
+    <h2>Handwritten Number Recognition System</h2>
+  </div>
+</header>
+
+
+<main>
+  <div class="main-container">
+
+    <!-- Sidebar Control Panel -->
+    <aside class="controls">
+      <!-- Upload form for image input and model selection -->
+      <form method="POST" enctype="multipart/form-data">
+        <label for="image">Upload an image (multi-digit supported):</label>
+        <input id="image" name="image" type="file" accept="image/*" required />
+
+        <!-- Model selection dropdown -->
+        <div style="margin-top:12px;">
+          <label for="model_choice">Select model (per-request):</label>
+          <select id="model_choice" name="model_choice">
+            <!-- Flask template conditions dynamically pre-select the chosen model -->
+            <option value="ensemble" {% if settings.model_choice == 'ensemble' %}selected{% endif %}>All Models</option>
+            <option value="emnist" {% if settings.model_choice == 'emnist' %}selected{% endif %}>CNN+ (EMNIST)</option>
+            <option value="cnn" {% if settings.model_choice == 'cnn' %}selected{% endif %}>CNN (MNIST)</option>
+            <option value="seq" {% if settings.model_choice == 'seq' %}selected{% endif %}>Sequential</option>
+            <option value="fnn" {% if settings.model_choice == 'fnn' %}selected{% endif %}>FNN</option>
+          </select>
+        </div>
+
+        <!-- Run and Reset buttons -->
+        <div style="display:flex; gap:8px; margin-top:8px;">
+          <button type="submit">Run</button>
+          <button type="reset">Clear</button>
+        </div>
+      </form>
+
+      <!-- Model re-training form -->
+      <form id="retrain-form">
+        <h4>Hyper-parameters</h4>
+
+        <!-- Dropdown to choose which model to retrain -->
+        <div style="margin-bottom: 12px;">
+          <label for="model_to_train">Model to Re-Train:</label>
+          <select id="model_to_train" name="model_to_train">
+            <option value="cnn">CNN (MNIST)</option>
+            <option value="emnist">CNN+ (EMNIST)</option>
+            <option value="fnn">FNN</option>
+            <option value="seq">Sequential</option>
+          </select>
+        </div>
+
+        <!-- Hyperparameter inputs for each model -->
+        <!-- CNN (MNIST) parameters -->
+        <h5>CNN (MNIST)</h5>
+        epochs: <input type="number" name="cnn_epochs" value="{{ settings.cnn.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="cnn_lr" value="{{ settings.cnn.learning_rate }}" /> <br>
+        batch: <input type="number" name="cnn_bs" value="{{ settings.cnn.batch_size }}" min="1" />
+
+        <!-- CNN+ (EMNIST) parameters -->
+        <h5>CNN+ (EMNIST)</h5>
+        epochs: <input type="number" name="emnist_epochs" value="{{ settings.emnist.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="emnist_lr" value="{{ settings.emnist.learning_rate }}" /> <br>
+        batch: <input type="number" name="emnist_bs" value="{{ settings.emnist.batch_size }}" min="1" />
+
+        <!-- Sequential model parameters -->
+        <h5>SEQ</h5>
+        epochs: <input type="number" name="seq_epochs" value="{{ settings.seq.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="seq_lr" value="{{ settings.seq.learning_rate }}" /> <br>
+        batch: <input type="number" name="seq_bs" value="{{ settings.seq.batch_size }}" min="1" />
+
+        <!-- Feedforward Neural Network parameters -->
+        <h5>FNN</h5>
+        epochs: <input type="number" name="fnn_epochs" value="{{ settings.fnn.epochs }}" min="1" /> <br>
+        learning rate: <input type="number" step="0.0001" name="fnn_lr" value="{{ settings.fnn.learning_rate }}" /> <br>
+        batch: <input type="number" name="fnn_bs" value="{{ settings.fnn.batch_size }}" min="1" />
+
+        <!-- Retrain button and loading spinner icon -->
+        <div style="margin-top:8px; display: flex; align-items: center;">
+          <button type="submit" id="retrain-btn">Re-Train with Custom Parameters</button>
+          <div class="spinner" id="retrain-spinner"></div>
+        </div>
+
+        <!-- Status message area for training feedback -->
+        <div id="retrain-status-message" class="status-message"></div>
+      </form>
+    </aside>
+
+    <!-- Image Display area -->
+    <section class="draw-box">
+      {% if overlay_url %}
+      <!-- Display processed image with overlaid predictions -->
+      <img src="{{ overlay_url }}" alt="overlay" style="max-width:100%; height:auto; border:1px solid #ccc;" />
+      {% else %}
+      <!-- Canvas for drawing digits when no image is uploaded -->
+      <canvas id="canvas" width="300" height="300"></canvas>
+      {% endif %}
+    </section>
+
+    <!-- Results & Evaluation -->
+    <section class="result-box">
+
+      <!-- Display model evaluation charts (Confusion Matrices) -->
+      {% if predictions %}
+      <div class="evaluation-charts">
+        <h4>Evaluation Charts</h4>
+        {% if settings.model_choice == 'ensemble' %}
+        <!-- Show confusion matrices for all models when ensemble mode is selected -->
+        <div>
+          <h5>CNN+ (EMNIST) Confusion Matrix</h5>
+          <img src="{{ url_for('static', filename='charts/emnist_cm.png') }}" alt="EMNIST Confusion Matrix" />
+        </div>
+        <div>
+          <h5>CNN (MNIST) Confusion Matrix</h5>
+          <img src="{{ url_for('static', filename='charts/cnn_cm.png') }}" alt="CNN Confusion Matrix" />
+        </div>
+        <div>
+          <h5>Sequential Model Confusion Matrix</h5>
+          <img src="{{ url_for('static', filename='charts/seq_cm.png') }}" alt="Sequential Model Confusion Matrix" />
+        </div>
+        <div>
+          <h5>FNN Confusion Matrix</h5>
+          <img src="{{ url_for('static', filename='charts/fnn_cm.png') }}" alt="FNN Confusion Matrix" />
+        </div>
+        {% elif settings.model_choice == 'emnist' %}
+        <img src="{{ url_for('static', filename='charts/emnist_cm.png') }}" alt="EMNIST Confusion Matrix" />
+        {% elif settings.model_choice == 'cnn' %}
+        <img src="{{ url_for('static', filename='charts/cnn_cm.png') }}" alt="CNN Confusion Matrix" />
+        {% elif settings.model_choice == 'seq' %}
+        <img src="{{ url_for('static', filename='charts/seq_cm.png') }}" alt="Sequential Model Confusion Matrix" />
+        {% elif settings.model_choice == 'fnn' %}
+        <img src="{{ url_for('static', filename='charts/fnn_cm.png') }}" alt="FNN Confusion Matrix" />
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Prediction results table -->
+      <div class="prediction-box">
+        <p><strong>Predictions</strong></p>
+
+        {% if predictions %}
+        <table class="prediction-table">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>CNN+ (Label / Conf)</th>
+            <th>CNN (Label / Conf)</th>
+            <th>SEQ (Label / Conf)</th>
+            <th>FNN (Label / Conf)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <!-- Loop through each prediction and display per-model results -->
+          {% for pred in predictions %}
+          <tr>
+            <td>{{ loop.index0 }}</td>
+            <td>
+              {% if pred.emnist and pred.emnist.label is not none %}
+              {{ pred.emnist.label }} / {{ '%.2f'|format(pred.emnist.conf) }}
+              {% else %} - {% endif %}
+            </td>
+            <td>
+              {% if pred.cnn and pred.cnn.label is not none %}
+              {{ pred.cnn.label }} / {{ '%.2f'|format(pred.cnn.conf) }}
+              {% else %} - {% endif %}
+            </td>
+            <td>
+              {% if pred.seq and pred.seq.label is not none %}
+              {{ pred.seq.label }} / {{ '%.2f'|format(pred.seq.conf) }}
+              {% else %} - {% endif %}
+            </td>
+            <td>
+              {% if pred.fnn and pred.fnn.label is not none %}
+              {{ pred.fnn.label }} / {{ '%.2f'|format(pred.fnn.conf) }}
+              {% else %} - {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <!-- Displayed when no predictions are available yet -->
+        <p>No predictions yet. Upload an image and click Run.</p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Client-side Scripts -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get key DOM elements
+    const retrainForm = document.getElementById('retrain-form');
+    const retrainBtn = document.getElementById('retrain-btn');
+    const spinner = document.getElementById('retrain-spinner');
+    const statusMessage = document.getElementById('retrain-status-message');
+    let pollingInterval;
+
+    // Handle retraining form submission
+    retrainForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission behavior
+      spinner.style.display = 'inline-block';
+      retrainBtn.disabled = true;
+      statusMessage.textContent = 'Starting training...';
+      statusMessage.className = 'status-message info';
+      const formData = new FormData(retrainForm);
+
+      // Send retrain request to Flask backend
+      fetch('/retrain', { method: 'POST', body: formData })
+              .then(response => response.json())
+              .then(data => {
+                if (data.status === 'success') {
+                  // Start polling the server for training progress
+                  pollingInterval = setInterval(checkStatus, 3000);
+                } else {
+                  // Display error message from server
+                  statusMessage.textContent = data.message;
+                  statusMessage.className = 'status-message error';
+                  spinner.style.display = 'none';
+                  retrainBtn.disabled = false;
+                }
+              })
+              .catch(error => {
+                // Handle unexpected client-side errors
+                statusMessage.textContent = 'An unexpected error occurred.';
+                statusMessage.className = 'status-message error';
+                spinner.style.display = 'none';
+                retrainBtn.disabled = false;
+                console.error('Error:', error);
+              });
+    });
+
+    // Function to check retraining status periodically
+    function checkStatus() {
+      fetch('/retrain-status')
+              .then(response => response.json())
+              .then(data => {
+                statusMessage.textContent = data.message;
+
+                // Stop polling once training is done or failed
+                if (data.status === 'completed' || data.status === 'error') {
+                  clearInterval(pollingInterval);
+                  spinner.style.display = 'none';
+                  retrainBtn.disabled = false;
+                  statusMessage.className = `status-message ${data.status}`;
+                } else {
+                  statusMessage.className = 'status-message info';
+                }
+              })
+              .catch(error => {
+                console.error('Polling Error:', error);
+                statusMessage.textContent = 'Could not get status. Check server logs.';
+                statusMessage.className = 'status-message error';
+                clearInterval(pollingInterval);
+                spinner.style.display = 'none';
+                retrainBtn.disabled = false;
+              });
+    }
+  });
+</script>
+</body>
+</html>
