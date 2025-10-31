@@ -64,96 +64,98 @@ The application is built with a Python Flask backend and a simple HTML/CSS/JavaS
 
 The project is organized into distinct modules for data, source code (including the GUI, models, and utilities), and saved assets.
 
+```
 src
- ┣ evaluation
- ┃ ┣ figures
- ┃ ┃ ┣ cnn
- ┃ ┃ ┃ ┣ cm_mnist.png
- ┃ ┃ ┃ ┣ cnn_confusion_matrix.png
- ┃ ┃ ┃ ┣ cnn_pred_vs_actual.png
- ┃ ┃ ┃ ┗ cnn_sample_pred_visualisation.png
- ┃ ┃ ┣ fnn
- ┃ ┃ ┃ ┣ fnn_confusion_matrix.png
- ┃ ┃ ┃ ┣ fnn_pred_vs_actual.png
- ┃ ┃ ┃ ┗ fnn_sample_pred_visualisation.png
- ┃ ┃ ┗ keras
- ┃ ┃ ┃ ┣ keras_sequential_confusion_matrix.png
- ┃ ┃ ┃ ┣ keras_sequential_pred_vs_actual.png
- ┃ ┃ ┃ ┗ keras_sequential_sample_pred_visualisation.png
- ┃ ┣ evaluation_cnn.ipynb
- ┃ ┣ evaluation_fnn.ipynb
- ┃ ┗ evaluation_keras.ipynb
- ┣ GUI
- ┃ ┣ binarized
- ┃ ┃ ┣ binarized.png
- ┃ ┃ ┗ binarized_clean.png
- ┃ ┣ outputs
- ┃ ┃ ┣ preview_labeled.png
- ┃ ┃ ┣ segmented_ 0.png
- ┃ ┃ ┣ segmented_ 1.png
- ┃ ┃ ┣ segmented_ 2.png
- ┃ ┃ ┣ segmented_ 3.png
- ┃ ┃ ┣ segmented_ 4.png
- ┃ ┃ ┣ segmented_ 5.png
- ┃ ┃ ┗ segmented_ 6.png
- ┃ ┣ static
- ┃ ┃ ┣ charts
- ┃ ┃ ┃ ┣ cnn_cm.png
- ┃ ┃ ┃ ┣ emnist_cm.png
- ┃ ┃ ┃ ┣ fnn_cm.png
- ┃ ┃ ┃ ┗ seq_cm.png
- ┃ ┃ ┣ overlays
- ┃ ┃ ┃ ┣ overlay_12ca0b45.png
- ┃ ┃ ┃ ┣ overlay_39f0f683.png
- ┃ ┃ ┃ ┣ overlay_4655ecf0.png
- ┃ ┃ ┃ ┣ overlay_d7b76d99.png
- ┃ ┃ ┃ ┗ overlay_f3881155.png
- ┃ ┃ ┣ uploads
- ┃ ┃ ┃ ┣ upload_12ca0b45.png
- ┃ ┃ ┃ ┣ upload_39f0f683.png
- ┃ ┃ ┃ ┣ upload_4655ecf0.png
- ┃ ┃ ┃ ┣ upload_d7b76d99.png
- ┃ ┃ ┃ ┗ upload_f3881155.png
- ┃ ┃ ┗ style.css
- ┃ ┣ templates
- ┃ ┃ ┗ index.html
- ┃ ┣ training_logs
- ┃ ┃ ┣ cnn_logs.txt
- ┃ ┃ ┣ cnn_train.log
- ┃ ┃ ┣ fnn_train.log
- ┃ ┃ ┗ seq_train.log
- ┃ ┗ app.py
- ┣ models
- ┃ ┣ CNN
- ┃ ┃ ┣ CNN_eval.py
- ┃ ┃ ┣ CNN_train.py
- ┃ ┃ ┣ cnn_wrapper.py
- ┃ ┃ ┗ __init__.py
- ┃ ┣ CNN_EMNIST
- ┃ ┃ ┣ cnn_emnist_train.py
- ┃ ┃ ┣ cnn_emnist_wrapper.py
- ┃ ┃ ┣ model.py
- ┃ ┃ ┗ __init__.py
- ┃ ┣ FNN
- ┃ ┃ ┣ FNN.py
- ┃ ┃ ┣ fnn_wrapper.py
- ┃ ┃ ┗ __init__.py
- ┃ ┣ saved_models
- ┃ ┃ ┣ cnn_emnist_byclass.pth
- ┃ ┃ ┣ cnn_logs.txt
- ┃ ┃ ┣ cnn_model_best.pth
- ┃ ┃ ┣ fnn_net.pt
- ┃ ┃ ┣ sample_preds.png
- ┃ ┃ ┗ Sequential.keras
- ┃ ┗ SEQ
- ┃ ┃ ┣ SEQ.py
- ┃ ┃ ┣ seq_train.py
- ┃ ┃ ┣ seq_wrapper.py
- ┃ ┃ ┗ __init__.py
- ┣ preprocessing
- ┃ ┗ preprocessing.py
- ┗ segmentation
- ┃ ┗ segment.py
+┣ evaluation
+┃ ┣ figures
+┃ ┃ ┣ cnn
+┃ ┃ ┃ ┣ cm_mnist.png
+┃ ┃ ┃ ┣ cnn_confusion_matrix.png
+┃ ┃ ┃ ┣ cnn_pred_vs_actual.png
+┃ ┃ ┃ ┗ cnn_sample_pred_visualisation.png
+┃ ┃ ┣ fnn
+┃ ┃ ┃ ┣ fnn_confusion_matrix.png
+┃ ┃ ┃ ┣ fnn_pred_vs_actual.png
+┃ ┃ ┃ ┗ fnn_sample_pred_visualisation.png
+┃ ┃ ┗ keras
+┃ ┃ ┃ ┣ keras_sequential_confusion_matrix.png
+┃ ┃ ┃ ┣ keras_sequential_pred_vs_actual.png
+┃ ┃ ┃ ┗ keras_sequential_sample_pred_visualisation.png
+┃ ┣ evaluation_cnn.ipynb
+┃ ┣ evaluation_fnn.ipynb
+┃ ┗ evaluation_keras.ipynb
+┣ GUI
+┃ ┣ binarized
+┃ ┃ ┣ binarized.png
+┃ ┃ ┗ binarized_clean.png
+┃ ┣ outputs
+┃ ┃ ┣ preview_labeled.png
+┃ ┃ ┣ segmented_ 0.png
+┃ ┃ ┣ segmented_ 1.png
+┃ ┃ ┣ segmented_ 2.png
+┃ ┃ ┣ segmented_ 3.png
+┃ ┃ ┣ segmented_ 4.png
+┃ ┃ ┣ segmented_ 5.png
+┃ ┃ ┗ segmented_ 6.png
+┃ ┣ static
+┃ ┃ ┣ charts
+┃ ┃ ┃ ┣ cnn_cm.png
+┃ ┃ ┃ ┣ emnist_cm.png
+┃ ┃ ┃ ┣ fnn_cm.png
+┃ ┃ ┃ ┗ seq_cm.png
+┃ ┃ ┣ overlays
+┃ ┃ ┃ ┣ overlay_12ca0b45.png
+┃ ┃ ┃ ┣ overlay_39f0f683.png
+┃ ┃ ┃ ┣ overlay_4655ecf0.png
+┃ ┃ ┃ ┣ overlay_d7b76d99.png
+┃ ┃ ┃ ┗ overlay_f3881155.png
+┃ ┃ ┣ uploads
+┃ ┃ ┃ ┣ upload_12ca0b45.png
+┃ ┃ ┃ ┣ upload_39f0f683.png
+┃ ┃ ┃ ┣ upload_4655ecf0.png
+┃ ┃ ┃ ┣ upload_d7b76d99.png
+┃ ┃ ┃ ┗ upload_f3881155.png
+┃ ┃ ┗ style.css
+┃ ┣ templates
+┃ ┃ ┗ index.html
+┃ ┣ training_logs
+┃ ┃ ┣ cnn_logs.txt
+┃ ┃ ┣ cnn_train.log
+┃ ┃ ┣ fnn_train.log
+┃ ┃ ┗ seq_train.log
+┃ ┗ app.py
+┣ models
+┃ ┣ CNN
+┃ ┃ ┣ CNN_eval.py
+┃ ┃ ┣ CNN_train.py
+┃ ┃ ┣ cnn_wrapper.py
+┃ ┃ ┗ __init__.py
+┃ ┣ CNN_EMNIST
+┃ ┃ ┣ cnn_emnist_train.py
+┃ ┃ ┣ cnn_emnist_wrapper.py
+┃ ┃ ┣ model.py
+┃ ┃ ┗ __init__.py
+┃ ┣ FNN
+┃ ┃ ┣ FNN.py
+┃ ┃ ┣ fnn_wrapper.py
+┃ ┃ ┗ __init__.py
+┃ ┣ saved_models
+┃ ┃ ┣ cnn_emnist_byclass.pth
+┃ ┃ ┣ cnn_logs.txt
+┃ ┃ ┣ cnn_model_best.pth
+┃ ┃ ┣ fnn_net.pt
+┃ ┃ ┣ sample_preds.png
+┃ ┃ ┗ Sequential.keras
+┃ ┗ SEQ
+┃ ┃ ┣ SEQ.py
+┃ ┃ ┣ seq_train.py
+┃ ┃ ┣ seq_wrapper.py
+┃ ┃ ┗ __init__.py
+┣ preprocessing
+┃ ┗ preprocessing.py
+┗ segmentation
+┃ ┗ segment.py
+```
 
 ## Evaluation Summary
 
